@@ -8,6 +8,8 @@ import Home from  '~/components/pages/Home.vue'
   <Home />
 </template>
 
-<style scoped lang="scss">
-
+<style lang="scss">
+* {
+  box-sizing: border-box;
+}
 </style>

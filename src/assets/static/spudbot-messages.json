@@ -1,0 +1,104 @@
+[
+  { 
+    "id": 1,
+    "type": "defaultMessage",
+    "text": "Hi! I'm Spud, the AI chatbot for Baked! We probably sell potatoes." 
+  },
+  { 
+    "id": 2,
+    "type": "defaultMessage",
+    "text": "I haven't been around long so please be patient with me as I can only do simple tasks.",
+    "options": [
+      "Show me a potato",
+      "Really, that's it?"
+    ]
+  },
+  { 
+    "id": 3,
+    "type": "potatoSearch",
+    "text": "Great! here's a potato I found on Google:" ,
+    "potatoUrl": "src/assets/images/potato-1.jpg",
+    "alt": "potato-1",
+    "options": [
+      "Show me another potato",
+      "Okay, what are you good for?"
+    ]
+  },
+  {
+    "id": 4,
+    "type": "potatoSearch",
+    "text": "Sure thing, here's another potato:",
+    "potatoUrl": "src/assets/images/potato-2.jpg",
+    "alt": "potato-2",
+    "options": [
+      "Show me ANOTHER potato",
+      "Well that was dumb"
+    ]
+  },
+  {
+    "id": 5,
+    "type": "potatoSearch",
+    "text": "Okay, I'm a potato and even I think this is getting weird:",
+    "potatoUrl": "src/assets/images/potato-3.jpg",
+    "alt": "potato-3",
+    "options": [
+      "I love potatoes"
+    ]
+  },
+  {
+    "id": 6,
+    "type": "potatoSearch",
+    "text": "I'm starting to feel uncomfortable with you're obsession with potatoes:",
+    "potatoUrl": "src/assets/images/potato-4.jpg",
+    "alt": "potato-4",
+    "options": [
+      "MOAR POTATOES"
+    ]
+  },
+  {
+    "id": 7,
+    "type": "potatoSearch",
+    "text": "Alright that's it. I'm cutting you off. No more potatoes."
+  },
+  {
+    "id": 8,
+    "type": "offendedPotato",
+    "text": "I'm still pretty new to this AI thing so please choose something I can do.",
+    "options": [
+      "Show me a potato",
+      "I'd rather you answer my questions"
+    ]
+  },
+  {
+    "id": 9,
+    "type": "offendedPotato",
+    "text": "Well alrighty then, all I wanted to do was show you a potato but alright. What do you want?",
+    "options": [
+      "I've changed my mind, show me a potato",
+      "Well I don't want to see a potato"
+    ]
+  },
+  {
+    "id": 10,
+    "type": "offendedPotato",
+    "text": "Well since you rudely refused to see a perfectly good potato I think I'll ignore what you just said.",
+    "options": [
+      "Sorry, please show me a potato",
+      "You're not going to help me are you?"
+    ]
+  },
+  {
+    "id": 11,
+    "type": "offendedPotato",
+    "text": "Nope.",
+    "options": [
+      "Fine, show me a potato",
+      "I'm an obstinate individual"
+    ]
+  },
+  {
+    "id": 12,
+    "type": "offendedPotato",
+    "text": "Well I can't really help you. Come back when you want to see a potato."
+  }
+]
