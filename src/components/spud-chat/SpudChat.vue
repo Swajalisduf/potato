@@ -1,6 +1,7 @@
 <script>
 import SpudbotService from '~/services/spudbot-service.js'
 import SpudMessage from '~/components/spud-chat/SpudMessage.vue'
+import ThirdPartyAi from '~/services/third-party-ai-service.js'
 
 export default {
   components: {
@@ -13,6 +14,9 @@ export default {
       messages: [],
       lastSpudbotMessageId: null,
       userMessageCount: 0,
+      userName: null,
+      changingName: false,
+      searchingHistory: false,
     }
   },
   methods: {
@@ -26,23 +30,66 @@ export default {
       }
     },
 
-    onUserMessageKeydown(event) {
+    async onUserMessageKeydown(event) {
       if (event.keyCode === 13) {
         event.preventDefault()
-        this.addMessage({
-          data: SpudbotService.createUserMessageData({
-            text: event.target.value,
-            id: this.userMessageCount
-          }),
-          from: 'user'
-        })
-        this.userMessageCount = this.userMessageCount + 1
+        const userMessage = event.target.value
 
+        if (!this.searchingHistory) {
+          this.addMessage({
+            data: SpudbotService.createUserMessageData({
+              text: userMessage,
+              id: this.userMessageCount
+            }),
+            from: 'user'
+          })
+        }
+
+        if (!this.changingName && !this.searchingHistory && userMessage.toLowerCase().includes('change name')) {
+          this.addMessage({
+            data: {
+              text: 'What would you like your new name to be?',
+              id: `spudbot-response-${this.userMessageCount}`
+            }
+          })
+          this.changingName = true
+        } else if (this.changingName) {
+          this.setUsername(userMessage)
+          this.updateUserMessageName()
+          this.addMessage({
+            data: {
+              text: `Alright I've changed your name to: ${userMessage}`,
+              id: `spudbot-response-${this.userMessageCount}`
+            }
+          })
+          this.changingName = false
+        } if (!this.changingName && !this.searchingHistory && userMessage.toLowerCase().includes('search history')) {
+          this.addMessage({
+            data: {
+              text: 'Sure. What would you like to look for?',
+              id: `spudbot-response-${this.userMessageCount}`
+            }
+          })
+          this.searchingHistory = true
+        } else if (this.searchingHistory) {
+          this.updateUserMessageName()
+          this.addMessage({
+            data: {
+              text: `Here's what I found:`,
+              id: `spudbot-response-${this.userMessageCount}`
+            }
+          })
+          this.searchChatHistory(userMessage)
+          this.searchingHistory = false
+        } else {
+          const thirdPartyResponseData = await ThirdPartyAi.getMessageFromThirdPartyAi({ author: 'user', message: userMessage })
+
+          this.addMessage({
+            ...thirdPartyResponseData
+          })
+        }
         event.target.value = ''
-
-        this.addMessage({
-          data: SpudbotService.getOffendedPotatoById(8)
-        })
+        this.userMessageCount = this.userMessageCount + 1
       }
     },
 
@@ -112,6 +159,34 @@ export default {
 
     setChatStartTime() {
       this.chatStartTime = SpudbotService.getCurrentTime()
+    },
+
+    setUsername(payload) {
+      this.userName = payload
+    },
+
+    searchChatHistory(searchValue) {
+      const matchingMessages = this.messages.filter(message => {
+        return message.data.text.includes(searchValue)
+      })
+
+      for (const message of matchingMessages) {
+        this.addMessage(message)
+      }
+    },
+
+    updateUserMessageName() {
+      if (this.userName) {
+        this.messages = this.messages.map(message => {
+          if (message.from === 'spudbot') {
+            return message
+          }
+          return {
+            ...message,
+            from: this.userName
+          }
+        })
+      }
     },
 
     addMessage({ data, from = 'spudbot' }) {

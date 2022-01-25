@@ -15,7 +15,7 @@ export default {
     <img 
       class="chat-message m-0 p-2"
       :class="{
-        'user-message align-self-end': message.from === 'user',
+        'user-message align-self-end': message.from !== 'spudbot',
         'bot-message align-self-start': message.from === 'spudbot',
       }"
       :src="message.data.potatoUrl"
@@ -30,13 +30,14 @@ export default {
     <p 
       class="chat-message m-0 p-2"
       :class="{
-        'user-message align-self-end text-end': message.from === 'user',
+        'user-message align-self-end text-end': message.from !== 'spudbot',
         'bot-message align-self-start': message.from === 'spudbot',
       }"
     >
+      <small>{{ message.from }}</small>
       {{ message.data.text }}
     </p>
-    <small :class="{'text-end': message.from === 'user'}">{{ message.time }}</small>
+    <small :class="{'text-end': message.from !== 'spudbot'}">{{ message.time }}</small>
   </div>
 </template>
 
